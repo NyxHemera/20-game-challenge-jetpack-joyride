@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://2dsklphrd7ps"]
+
+[ext_resource type="Texture2D" uid="uid://dk1xwq0lnojuw" path="res://addons/kenney_prototype_textures/purple/texture_09.png" id="1_uf7hp"]
+[ext_resource type="Texture2D" uid="uid://b1btbwwhr0wom" path="res://addons/kenney_prototype_textures/dark/texture_04.png" id="2_8r4x2"]
+[ext_resource type="Script" path="res://Background.gd" id="2_bkw8y"]
+[ext_resource type="PackedScene" uid="uid://bvdqybbrwnr6j" path="res://player.tscn" id="3_k0beh"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bevan"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lph8r"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Layout" type="ParallaxBackground" parent="."]
+scroll_limit_end = Vector2(2.08165e-12, 2.08165e-12)
+script = ExtResource("2_bkw8y")
+
+[node name="BackgroundLayer" type="ParallaxLayer" parent="Layout"]
+unique_name_in_owner = true
+motion_mirroring = Vector2(1024, 1024)
+
+[node name="Sprite2D" type="Sprite2D" parent="Layout/BackgroundLayer"]
+texture = ExtResource("1_uf7hp")
+centered = false
+
+[node name="FloorLayer" type="ParallaxLayer" parent="Layout"]
+unique_name_in_owner = true
+motion_mirroring = Vector2(1024, 2.08165e-12)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Layout/FloorLayer"]
+position = Vector2(1, 518)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Layout/FloorLayer/StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_bevan")
+
+[node name="Sprite2D" type="Sprite2D" parent="Layout/FloorLayer"]
+position = Vector2(513, 1030)
+texture = ExtResource("2_8r4x2")
+
+[node name="Floor" type="ParallaxBackground" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_k0beh")]
+position = Vector2(172, 222)
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_lph8r")
